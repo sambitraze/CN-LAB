@@ -51,7 +51,7 @@ int main() {
 	recvfrom(sockfd, &sum, sizeof(b),
 				0, (struct sockaddr *) &servaddr,
 				&len);;
-	printf("Sum sent from server : %s\n", sum);
+	printf("Sum sent from server : %d\n", sum);
 
 	close(sockfd);
 	return 0;

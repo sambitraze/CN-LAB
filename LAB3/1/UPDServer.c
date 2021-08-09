@@ -15,9 +15,6 @@
 int main()
 {
 	int sockfd;
-	char buffer1[MAXLINE];
-	char buffer2[MAXLINE];
-	char sum[MAXLINE];
 	struct sockaddr_in servaddr, cliaddr;
 
 	// Creating socket file descriptor
@@ -49,22 +46,17 @@ int main()
 
 	len = sizeof(cliaddr); //len is value/resuslt
 
-	a = recvfrom(sockfd, (char *)buffer1, MAXLINE,
+	recvfrom(sockfd, &a, sizeof(a),
 				 0, (struct sockaddr *)&cliaddr,
 				 &len);
-	buffer1[a] = '\0';
-	sscanf(buffer1, "%d", &x);
-	printf("Client : %s\n", buffer1);
-	b = recvfrom(sockfd, (char *)buffer2, MAXLINE,
+	printf("Client : %d\n", a);
+	recvfrom(sockfd, &b, sizeof(b),
 				 0, (struct sockaddr *)&cliaddr,
 				 &len);
-	buffer2[b] = '\0';
-	sscanf(buffer2, "%d", &y);
-	printf("Client : %s\n", buffer2);
-	
-	sprintf(sum, "%d", x+y);
+	printf("Client : %d\n", b);
+	int res = a+b;
 
-	sendto(sockfd, (const char *)sum, strlen(sum),
+	sendto(sockfd, &res, sizeof(int),
 		   0, (const struct sockaddr *)&cliaddr,
 		   len);
 	printf("sum sent to client\n");

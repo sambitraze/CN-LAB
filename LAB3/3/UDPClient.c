@@ -36,11 +36,11 @@ int main() {
 	printf("\nEnter a sentence: ");
 	scanf("%[^\n]", buffer);
 	
-	sendto(sockfd, buffer, sizeof(buffer),
+	sendto(sockfd, &buffer, sizeof(buffer),
 		0, (const struct sockaddr *) &servaddr,
 			sizeof(servaddr));
-	printf("value sent: %s\n", buffer);
-		
+	printf("value sent: %s\n", buffer);	
+
 	recvfrom(sockfd, &words, sizeof(int),
 				0, (struct sockaddr *) &servaddr,
 				&len);
