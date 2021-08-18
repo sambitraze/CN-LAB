@@ -56,12 +56,11 @@ int main()
 	{
 		res[j] = toupper(input[j]);
 	}
-	printf("value sent: %s\n", res);
 
 	sendto(sockfd, &res, sizeof(res),
 		   0, (const struct sockaddr *)&cliaddr,
 		   len);
-	printf("Response sent to client\n");
+	printf("Response sent to client: %s\n", res);
 
 	return 0;
 }
