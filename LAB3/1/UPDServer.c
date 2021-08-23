@@ -42,7 +42,7 @@ int main()
 
 	// actual part
 
-	int len, a, b,x,y;
+	int len, a, b;
 
 	len = sizeof(cliaddr); //len is value/resuslt
 
