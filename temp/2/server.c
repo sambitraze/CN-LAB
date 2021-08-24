@@ -12,7 +12,6 @@
 
 #define PORT 8080
 #define MAXLINE 1024
-
 // Driver code
 int main()
 {
@@ -43,29 +42,51 @@ int main()
 	}
 
 	// actual part
-	char res[MAXLINE];
-	int len, input, org, remainder, reversed = 0;
+	int len;
+	int n = 0;
 	len = sizeof(cliaddr); //len is value/resuslt
 
-	recvfrom(sockfd, &input, sizeof(input),
+	recvfrom(sockfd, &n, sizeof(n),
 			 0, (struct sockaddr *)&cliaddr,
 			 &len);
-	printf("Client : %d\n", input);
-	org = input;
-	while (input != 0)
+
+	int input[n], res[n];
+	recvfrom(sockfd, &input, sizeof(int) * n,
+			 0, (struct sockaddr *)&cliaddr,
+			 &len);
+	printf("Client : \n");
+	for (int i = 0; i < n; i++)
 	{
-		remainder = input % 10;
-		reversed = reversed * 10 + remainder;
-		input /= 10;
+		printf("%d ", input[i]);
 	}
-	if (org == reversed)
-		strcpy(res,"Is a palindrome\n");
-	else
-		strcpy(res,"Is Not a palindrome\n");
-	sendto(sockfd, &res, sizeof(res),
+
+	for (int i = 0; i < n; ++i) 
+        {
+ 
+            for (int j = i + 1; j < n; ++j)
+            {
+ 
+                if (input[i] > input[j]) 
+                {
+ 
+                    int a =  input[i];
+                    input[i] = input[j];
+                    input[j] = a;
+ 
+                }
+ 
+            }
+ 
+        }
+
+	sendto(sockfd, &res, sizeof(int) * n,
 		   0, (const struct sockaddr *)&cliaddr,
 		   len);
-	printf("Response sent to client: %s", res);
+	printf("\nResponse sent to client:\n");
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d ", input[i]);
+	}
 
 	return 0;
 }

@@ -33,21 +33,21 @@ int main()
 
 	int n, len;
 
-	char input[MAXLINE], res[MAXLINE];
+	int input, res;
 
-	printf("\nEnter word or sentence: ");
-	fgets(input, MAXLINE, stdin);
+	printf("\nEnter Number: ");
+	scanf("%d", &input);
 
 	sendto(sockfd, &input, sizeof(input),
 		   0, (const struct sockaddr *)&servaddr,
 		   sizeof(servaddr));
-	printf("value sent: %s\n", input);
+	printf("value sent: %d\n", input);
 
 	recvfrom(sockfd, &res, sizeof(res),
 			 0, (struct sockaddr *)&servaddr,
 			 &len);
 	;
-	printf("Response from server : %s\n", res);
+	printf("Response from server : %d\n", res);
 
 	close(sockfd);
 	return 0;

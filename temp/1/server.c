@@ -46,21 +46,26 @@ int main()
 
 	int len;
 	len = sizeof(cliaddr); //len is value/resuslt
-	char input[MAXLINE], res[MAXLINE];
+	int input, res = 0;
 
 	recvfrom(sockfd, &input, sizeof(input),
 			 0, (struct sockaddr *)&cliaddr,
 			 &len);
-	printf("Client : %s\n", input);
-	for (int j = 0; j < strlen(input); j++)
+	printf("Client : %d\n", input);
+
+	int rem;
+
+	while (input != 0)
 	{
-		res[j] = toupper(input[j]);
+		rem = input % 10;
+		res = res * 10 + rem;
+		input /= 10;
 	}
 
 	sendto(sockfd, &res, sizeof(res),
 		   0, (const struct sockaddr *)&cliaddr,
 		   len);
-	printf("Response sent to client: %s\n", res);
+	printf("Response sent to client: %d\n", res);
 
 	return 0;
 }

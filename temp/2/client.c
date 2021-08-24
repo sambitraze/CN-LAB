@@ -32,23 +32,37 @@ int main()
 	servaddr.sin_addr.s_addr = INADDR_ANY;
 
 	int n, len;
+	printf("\nEnter n: ");
+	scanf("%d", &n);
 
-	int input;
-	char res[MAXLINE];
+	int res[n], input[n];
+	for (int i = 0; i < n; i++)
+	{
+		printf("\nEnter element %d:", i + 1);
+		scanf("%d", &input[i]);
+	}
 
-	printf("\nEnter a 3 digit number: ");
-	scanf("%d", &input);
-
-	sendto(sockfd, &input, sizeof(input),
+	
+	sendto(sockfd, &n, sizeof(n),
 		   0, (const struct sockaddr *)&servaddr,
 		   sizeof(servaddr));
-	printf("value sent: %d\n", input);
+	sendto(sockfd, &input, sizeof(int) * n,
+		   0, (const struct sockaddr *)&servaddr,
+		   sizeof(servaddr));
+	printf("value sent: \n");
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d ", input[i]);
+	}
 
-	recvfrom(sockfd, &res, sizeof(res),
+	recvfrom(sockfd, &res, sizeof(int) * n,
 			 0, (struct sockaddr *)&servaddr,
 			 &len);
-	;
-	printf("Response from server : %s", res);
+	printf("\nvalue recived: \n");
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d ", res[i]);
+	}
 
 	close(sockfd);
 	return 0;
