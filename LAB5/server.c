@@ -58,7 +58,11 @@ int main()
         printf("Client : %s\n", input);
         srand(time(0));
         int val = rand() % (4 + 1 - 0) + 0;
-        char array[][10] = {"q1", "q2", "q3", "q4", "q5"};
+        char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
+                            "Someday is not a day of the week. -Denise Brennan-Nelson",
+                             "Hire character. Train skill. -Peter Schutz",
+                              "Your time is limited, so don't waste it living someone else's life. -Steve Jobs", 
+                              "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
         strcpy(res, array[val]);
         while (1)
         {
@@ -125,7 +129,11 @@ int main()
         printf("Client : %s\n", input);
         srand(time(0));
         int val = rand() % (4 + 1 - 0) + 0;
-        char array[][10] = {"q1", "q2", "q3", "q4", "q5"};
+        char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
+                            "Someday is not a day of the week. -Denise Brennan-Nelson",
+                             "Hire character. Train skill. -Peter Schutz",
+                              "Your time is limited, so don't waste it living someone else's life. -Steve Jobs", 
+                              "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
         strcpy(res, array[val]);
         while (1)
         {
