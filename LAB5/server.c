@@ -51,28 +51,32 @@ int main()
 
         //computation
         char input[MAXLINE], res[MAXLINE] = "hello";
-        recvfrom(sockfd, &input, sizeof(input),
-                 0, (struct sockaddr *)&cliaddr,
-                 &len);
+        int n = recvfrom(sockfd, &input, sizeof(input),
+                         0, (struct sockaddr *)&cliaddr,
+                         &len);
+        input[n] = '\0';
         printf("Client : %s\n", input);
         srand(time(0));
         int val = rand() % (4 + 1 - 0) + 0;
         char array[][10] = {"q1", "q2", "q3", "q4", "q5"};
         strcpy(res, array[val]);
-        if (1)
+        while (1)
         {
-            sendto(sockfd, &res, sizeof(res),
-                   0, (const struct sockaddr *)&cliaddr,
-                   len);
-            printf("Response sent to client: %s\n", res);
-        }
-        else
-        {
-            char res[MAXLINE] = "invalid input";
-            sendto(sockfd, &res, sizeof(res),
-                   0, (const struct sockaddr *)&cliaddr,
-                   len);
-            printf("Invalid input\n");
+            if (strcmp(input, "qotd") == 0)
+            {
+                sendto(sockfd, &res, sizeof(res),
+                       0, (const struct sockaddr *)&cliaddr,
+                       len);
+                printf("Response sent to client: %s\n", res);
+            }
+            else
+            {
+                char res[MAXLINE] = "invalid input";
+                sendto(sockfd, &res, sizeof(res),
+                       0, (const struct sockaddr *)&cliaddr,
+                       len);
+                printf("Invalid input\n");
+            }
         }
     }
     else
@@ -116,23 +120,26 @@ int main()
         printf("Server Started in TCP mode in port :%hi\n", PORT);
 
         char input[MAXLINE], res[MAXLINE];
-        read(new_socket, &input, sizeof(input));
+        int n = read(new_socket, &input, sizeof(input));
+        input[n] = '\0';
         printf("Client : %s\n", input);
         srand(time(0));
         int val = rand() % (4 + 1 - 0) + 0;
-        printf("%d", val);
         char array[][10] = {"q1", "q2", "q3", "q4", "q5"};
         strcpy(res, array[val]);
-        if (1)
+        while (1)
         {
-            send(new_socket, &res, sizeof(res), 0);
-            printf("QUote sent to client\n");
-        }
-        else
-        {
-            char res[MAXLINE] = "invalid input";
-            send(new_socket, &res, sizeof(res), 0);
-            printf("Invalid input\n");
+            if (strcmp(input, "qotd") == 0)
+            {
+                send(new_socket, &res, sizeof(res), 0);
+                printf("QUote sent to client\n");
+            }
+            else
+            {
+                char res[MAXLINE] = "invalid input";
+                send(new_socket, &res, sizeof(res), 0);
+                printf("Invalid input\n");
+            }
         }
     }
 
