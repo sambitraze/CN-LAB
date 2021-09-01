@@ -42,18 +42,21 @@ int main()
 
         int len;
         char input[4] = "qotd", res[MAXLINE];
+        int choice = 1;
+        do
+        {
+            sendto(sockfd, &input, sizeof(input),
+                   0, (const struct sockaddr *)&servaddr,
+                   sizeof(servaddr));
+            printf("value sent: %s\n", input);
 
-        sendto(sockfd, &input, sizeof(input),
-               0, (const struct sockaddr *)&servaddr,
-               sizeof(servaddr));
-        printf("value sent: %s\n", input);
-
-        recvfrom(sockfd, &res, sizeof(res),
-                 0, (struct sockaddr *)&servaddr,
-                 &len);
-        printf("Response from server : %s\n", res);
-        // exit;
-        // close(sockfd);
+            recvfrom(sockfd, &res, sizeof(res),
+                     0, (struct sockaddr *)&servaddr,
+                     &len);
+            printf("Response from server : %s\n", res);
+            printf("Do you want to get more quotes? 1 for yes 0 for no");
+            scanf("%d", &choice);
+        } while (choice);
     }
     else
     {
@@ -84,12 +87,17 @@ int main()
 
         printf("Server Started in TCP mode in port :%hi\n", PORT);
         char input[MAXLINE] = "qotd", res[MAXLINE];
+        int choice = 1;
+        do
+        {
+            send(sock, &input, sizeof(input), 0);
+            printf("value sent: %s\n", input);
 
-        send(sock, &input, sizeof(input), 0);
-        printf("value sent: %s\n", input);
-
-        read(sock, &res, sizeof(res));
-        printf("Respone form server: %s\n", res);
+            read(sock, &res, sizeof(res));
+            printf("Respone form server: %s\n", res);
+            printf("Do you want to get more quotes? 1 for yes 0 for no");
+            scanf("%d", &choice);
+        } while (choice);
     }
 
     return 0;

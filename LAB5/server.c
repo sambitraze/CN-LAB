@@ -51,21 +51,21 @@ int main()
 
         //computation
         char input[MAXLINE], res[MAXLINE] = "hello";
-        int n = recvfrom(sockfd, &input, sizeof(input),
-                         0, (struct sockaddr *)&cliaddr,
-                         &len);
-        input[n] = '\0';
-        printf("Client : %s\n", input);
-        srand(time(0));
-        int val = rand() % (4 + 1 - 0) + 0;
-        char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
-                            "Someday is not a day of the week. -Denise Brennan-Nelson",
-                             "Hire character. Train skill. -Peter Schutz",
-                              "Your time is limited, so don't waste it living someone else's life. -Steve Jobs", 
-                              "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
-        strcpy(res, array[val]);
         while (1)
         {
+            int n = recvfrom(sockfd, &input, sizeof(input),
+                             0, (struct sockaddr *)&cliaddr,
+                             &len);
+            input[n] = '\0';
+            printf("Client : %s\n", input);
+            srand(time(0));
+            int val = rand() % (4 + 1 - 0) + 0;
+            char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
+                                     "Someday is not a day of the week. -Denise Brennan-Nelson",
+                                     "Hire character. Train skill. -Peter Schutz",
+                                     "Your time is limited, so don't waste it living someone else's life. -Steve Jobs",
+                                     "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
+            strcpy(res, array[val]);
             if (strcmp(input, "qotd") == 0)
             {
                 sendto(sockfd, &res, sizeof(res),
@@ -124,19 +124,20 @@ int main()
         printf("Server Started in TCP mode in port :%hi\n", PORT);
 
         char input[MAXLINE], res[MAXLINE];
-        int n = read(new_socket, &input, sizeof(input));
-        input[n] = '\0';
-        printf("Client : %s\n", input);
-        srand(time(0));
-        int val = rand() % (4 + 1 - 0) + 0;
-        char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
-                            "Someday is not a day of the week. -Denise Brennan-Nelson",
-                             "Hire character. Train skill. -Peter Schutz",
-                              "Your time is limited, so don't waste it living someone else's life. -Steve Jobs", 
-                              "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
-        strcpy(res, array[val]);
         while (1)
         {
+            printf("Waiting for client to initiate");
+            int n = read(new_socket, &input, sizeof(input));
+            input[n] = '\0';
+            printf("Client : %s\n", input);
+            srand(time(0));
+            int val = rand() % (4 + 1 - 0) + 0;
+            char array[][MAXLINE] = {"People often say that motivation doesn't last. Well, neither does bathing -- that's why we recommend it daily. -Zig Ziglar",
+                                     "Someday is not a day of the week. -Denise Brennan-Nelson",
+                                     "Hire character. Train skill. -Peter Schutz",
+                                     "Your time is limited, so don't waste it living someone else's life. -Steve Jobs",
+                                     "If you are not taking care of your customer, your competitor will. -Bob Hooey"};
+            strcpy(res, array[val]);
             if (strcmp(input, "qotd") == 0)
             {
                 send(new_socket, &res, sizeof(res), 0);
